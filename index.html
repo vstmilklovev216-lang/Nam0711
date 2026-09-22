@@ -1,1 +1,723 @@
-안녕하세요.
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monarch Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;800&family=Playfair+Display:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #fffaf8;
+        --panel: #ffffff;
+        --panel-soft: #fff4f1;
+        --text: #3e3a3a;
+        --muted: #736a6a;
+        --line: rgba(98, 81, 90, 0.1);
+        --accent: #f6b7c5;
+        --accent-strong: #e28ca2;
+        --accent-soft: #fbe9ee;
+        --shadow: 0 22px 50px rgba(181, 147, 152, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at top, rgba(255, 224, 232, 0.9), rgba(255, 244, 245, 0.7) 23%, transparent 38%),
+          linear-gradient(180deg, #fffaf8 0%, #fff4ee 100%);
+        color: var(--text);
+        font-family: 'Noto Sans KR', 'Inter', sans-serif;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(18px);
+        background: rgba(255, 255, 255, 0.72);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 80px;
+        gap: 24px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.82rem;
+        letter-spacing: 0.28rem;
+        text-transform: uppercase;
+        color: #3c3737;
+      }
+
+      .brand-mark {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f7c0d0, #f9e6b7);
+        box-shadow: 0 0 18px rgba(246, 183, 197, 0.6);
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      nav a {
+        transition: color 0.2s ease;
+      }
+
+      nav a:hover {
+        color: var(--text);
+      }
+
+      .hero {
+        padding: 72px 0 28px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0));
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 0 20px;
+        border-radius: 999px;
+        border: 1px solid rgba(17, 17, 17, 0.12);
+        background: rgba(255, 255, 255, 0.45);
+        color: var(--text);
+        font-weight: 600;
+        transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        border-color: rgba(17, 17, 17, 0.22);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #2c2c2c, #757575);
+        color: #f7f7f7;
+        border: none;
+        box-shadow: 0 18px 38px rgba(60, 60, 60, 0.18);
+      }
+
+      .hero-inner {
+        display: grid;
+        grid-template-columns: 1.08fr 0.92fr;
+        align-items: center;
+        gap: 48px;
+      }
+
+      .eyebrow {
+        margin: 0 0 16px;
+        color: var(--accent-strong);
+        letter-spacing: 0.2rem;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: 'Playfair Display', 'Noto Sans KR', serif;
+        font-size: clamp(3.2rem, 5vw, 6.2rem);
+        line-height: 0.96;
+        letter-spacing: -0.05em;
+      }
+
+      .hero-copy p.lead {
+        margin-top: 22px;
+        max-width: 560px;
+        color: var(--muted);
+        font-size: 1.04rem;
+        line-height: 1.8;
+      }
+
+      .hero-actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
+
+      .stats {
+        display: flex;
+        gap: 44px;
+        flex-wrap: wrap;
+        margin-top: 42px;
+      }
+
+      .stat {
+        min-width: 110px;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: clamp(1.4rem, 2vw, 2.1rem);
+        font-weight: 700;
+      }
+
+      .stat span {
+        display: block;
+        color: var(--muted);
+        margin-top: 8px;
+        font-size: 0.82rem;
+        letter-spacing: 0.08rem;
+        text-transform: uppercase;
+      }
+
+      .gallery-visual {
+        position: relative;
+        min-height: 680px;
+      }
+
+      .stack {
+        position: absolute;
+        inset: 0;
+      }
+
+      .stack-card {
+        position: absolute;
+        overflow: hidden;
+        border-radius: 26px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: var(--shadow);
+        background: #111;
+      }
+
+      .stack-card img {
+        height: 100%;
+        object-fit: cover;
+        filter: saturate(0.8) contrast(1.08);
+      }
+
+      .stack-card:nth-child(1) {
+        width: 62%;
+        height: 70%;
+        right: 18%;
+        top: 0;
+        transform: rotate(-4deg);
+      }
+
+      .stack-card:nth-child(2) {
+        width: 52%;
+        height: 54%;
+        left: 14%;
+        bottom: 8%;
+        transform: rotate(6deg);
+      }
+
+      .stack-card:nth-child(3) {
+        width: 39%;
+        height: 42%;
+        right: 4%;
+        bottom: 0;
+        transform: rotate(-10deg);
+      }
+
+      .gallery {
+        padding: 52px 0 18px;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 28px;
+      }
+
+      .section-head p {
+        margin: 0;
+        color: var(--accent-strong);
+        text-transform: uppercase;
+        letter-spacing: 0.18rem;
+        font-size: 0.72rem;
+      }
+
+      .section-head h2 {
+        margin: 8px 0 0;
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2.2rem, 3vw, 3.5rem);
+        letter-spacing: -0.04em;
+      }
+
+      .filters {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--muted);
+        padding: 10px 16px;
+        cursor: pointer;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        transition: all 0.2s ease;
+      }
+
+      .filter-btn.active,
+      .filter-btn:hover {
+        background: rgba(246, 183, 197, 0.15);
+        color: var(--text);
+        border-color: rgba(226, 140, 162, 0.35);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .card {
+        position: relative;
+        grid-column: span 4;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        transition: transform 0.25s ease, border-color 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
+        box-shadow: 0 14px 28px rgba(194, 170, 176, 0.08);
+      }
+
+      .card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(226, 140, 162, 0.25);
+        box-shadow: 0 22px 32px rgba(194, 170, 176, 0.12);
+      }
+
+      .card.hidden {
+        display: none;
+      }
+
+      .card .image-wrap {
+        position: relative;
+        aspect-ratio: 0.9;
+        overflow: hidden;
+      }
+
+      .card img {
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1.01);
+        transition: transform 0.35s ease;
+      }
+
+      .card:hover img {
+        transform: scale(1.08);
+      }
+
+      .card-body {
+        padding: 16px 18px 18px;
+      }
+
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        letter-spacing: 0.12rem;
+        text-transform: uppercase;
+      }
+
+      .title {
+        margin: 12px 0 8px;
+        font-size: 1.28rem;
+        font-weight: 600;
+      }
+
+      .desc {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .featured {
+        padding: 72px 0 100px;
+      }
+
+      .featured-box {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 24px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,244,241,0.8));
+        border: 1px solid var(--line);
+        border-radius: 32px;
+        overflow: hidden;
+        box-shadow: 0 18px 42px rgba(189, 167, 173, 0.12);
+      }
+
+      .featured-box .feature-image {
+        min-height: 520px;
+      }
+
+      .featured-box .feature-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .feature-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 40px 38px;
+      }
+
+      .feature-copy p {
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .feature-copy h3 {
+        margin: 0 0 18px;
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2rem, 3vw, 3.4rem);
+        letter-spacing: -0.04em;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 18px 0 44px;
+      }
+
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        color: var(--muted);
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 980px) {
+        .hero-inner,
+        .featured-box {
+          grid-template-columns: 1fr;
+        }
+
+        .gallery-visual {
+          min-height: 500px;
+        }
+      }
+
+      @media (max-width: 760px) {
+        nav {
+          display: none;
+        }
+
+        .topbar-inner {
+          min-height: 72px;
+        }
+
+        .section-head {
+          align-items: start;
+          flex-direction: column;
+        }
+
+        .card {
+          grid-column: span 6;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .card {
+          grid-column: 1 / -1;
+        }
+
+        .hero {
+          padding-top: 52px;
+        }
+
+        .gallery-visual {
+          min-height: 420px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand">
+          <span class="brand-mark"></span>
+          MONO
+        </div>
+        <nav>
+          <a href="#gallery">전시</a>
+          <a href="#featured">추천</a>
+          <a href="#visits">관람</a>
+          <a href="#journal">저널</a>
+        </nav>
+        <a class="btn btn-primary" href="#visits">관람 예약</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">Modern art & culture</p>
+            <h1>빛이 기억이 되는 공간.</h1>
+            <p class="lead">
+              감각적인 형태와 절제된 색감, 그리고 시간을 품은 작품들이 함께하는 공간입니다.
+              장면과 분위기를 통해 사소한 순간까지도 예술로 남깁니다.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#gallery">작품 둘러보기</a>
+              <a class="btn" href="#featured">전시 소개</a>
+            </div>
+            <div class="stats">
+              <div class="stat">
+                <strong>120+</strong>
+                <span>작가</span>
+              </div>
+              <div class="stat">
+                <strong>18</strong>
+                <span>전시</span>
+              </div>
+              <div class="stat">
+                <strong>08</strong>
+                <span>공간</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-visual" aria-label="Art showcase preview">
+            <div class="stack">
+              <div class="stack-card">
+                <img
+                  src="https://images.unsplash.com/photo-1515405295579-ba7b45403062?auto=format&fit=crop&w=900&q=80"
+                  alt="Artwork installation"
+                />
+              </div>
+              <div class="stack-card">
+                <img
+                  src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
+                  alt="Abstract sculpture"
+                />
+              </div>
+              <div class="stack-card">
+                <img
+                  src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=900&q=80"
+                  alt="Cultural art exhibit"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="gallery" id="gallery">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p>Featured collection</p>
+              <h2>대표 작품</h2>
+            </div>
+            <div class="filters" aria-label="Gallery filters">
+              <button class="filter-btn active" data-filter="all">전체</button>
+              <button class="filter-btn" data-filter="photography">사진</button>
+              <button class="filter-btn" data-filter="sculpture">조각</button>
+              <button class="filter-btn" data-filter="painting">회화</button>
+            </div>
+          </div>
+
+          <div class="grid">
+            <article class="card" data-category="photography">
+              <div class="image-wrap">
+                <img
+                  src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80"
+                  alt="Portrait photography"
+                />
+              </div>
+              <div class="card-body">
+                <div class="meta">
+                  <span>사진</span>
+                  <span>2026</span>
+                </div>
+                <h3 class="title">잔광</h3>
+                <p class="desc">고요와 기억을 담아낸 인물의 조용한 빛.</p>
+              </div>
+            </article>
+
+            <article class="card" data-category="sculpture">
+              <div class="image-wrap">
+                <img
+                  src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=900&q=80"
+                  alt="Sculpture art"
+                />
+              </div>
+              <div class="card-body">
+                <div class="meta">
+                  <span>조각</span>
+                  <span>2025</span>
+                </div>
+                <h3 class="title">움직임의 형태</h3>
+                <p class="desc">질감과 균형 속에서 정적인 아름다움을 표현한 작품.</p>
+              </div>
+            </article>
+
+            <article class="card" data-category="painting">
+              <div class="image-wrap">
+                <img
+                  src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=900&q=80"
+                  alt="Abstract painting"
+                />
+              </div>
+              <div class="card-body">
+                <div class="meta">
+                  <span>회화</span>
+                  <span>2026</span>
+                </div>
+                <h3 class="title">골든 드리프트</h3>
+                <p class="desc">캔버스 위에 겹쳐진 시간과 색의 흐름을 담았다.</p>
+              </div>
+            </article>
+
+            <article class="card" data-category="photography">
+              <div class="image-wrap">
+                <img
+                  src="https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=900&q=80"
+                  alt="Landscape photography"
+                />
+              </div>
+              <div class="card-body">
+                <div class="meta">
+                  <span>사진</span>
+                  <span>2024</span>
+                </div>
+                <h3 class="title">밤의 통로</h3>
+                <p class="desc">그림자와 지평선 사이의 영화 같은 감성을 담았다.</p>
+              </div>
+            </article>
+
+            <article class="card" data-category="painting">
+              <div class="image-wrap">
+                <img
+                  src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80"
+                  alt="Color painting"
+                />
+              </div>
+              <div class="card-body">
+                <div class="meta">
+                  <span>회화</span>
+                  <span>2025</span>
+                </div>
+                <h3 class="title">봄 신호</h3>
+                <p class="desc">식물의 리듬을 떠올리게 하는 색과 형태의 조화.</p>
+              </div>
+            </article>
+
+            <article class="card" data-category="sculpture">
+              <div class="image-wrap">
+                <img
+                  src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=80"
+                  alt="Installation art"
+                />
+              </div>
+              <div class="card-body">
+                <div class="meta">
+                  <span>설치</span>
+                  <span>2026</span>
+                </div>
+                <h3 class="title">프리즘 챔버</h3>
+                <p class="desc">반사된 빛과 공간의 소리가 함께 울리는 조형 공간.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="featured" id="featured">
+        <div class="container">
+          <div class="featured-box">
+            <div class="feature-image">
+              <img
+                src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80"
+                alt="Featured exhibition"
+              />
+            </div>
+            <div class="feature-copy">
+              <p class="eyebrow">Current exhibition</p>
+              <h3>메아리 사이</h3>
+              <p>
+                사진과 기억의 경계를 허무는 작품들이 함께 모인 전시입니다.
+                각 작품은 공간과 형태, 그리고 순간의 빛 속에 남는 존재감을 탐구합니다.
+              </p>
+              <p>
+                10월까지 진행되며, 매주 금요일 저녁 가이드 투어와 마지막 주말 아티스트 토크가 이어집니다.
+              </p>
+              <a class="btn btn-primary" href="#visits">티켓 예약</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="visits">
+      <div class="container footer-inner">
+        <div>모노 갤러리 • 서울시 종로구 예술로 24</div>
+        <div>hello@monogallery.com</div>
+      </div>
+    </footer>
+
+    <script>
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const cards = document.querySelectorAll('.card');
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const filter = button.dataset.filter;
+
+          filterButtons.forEach((btn) => btn.classList.toggle('active', btn === button));
+
+          cards.forEach((card) => {
+            const match = filter === 'all' || card.dataset.category === filter;
+            card.classList.toggle('hidden', !match);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
+
